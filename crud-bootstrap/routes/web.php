@@ -5,6 +5,11 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('layouts.app');
+})->name('home');
+
+// Rotas para Aluno
+Route::get('/aluno', function() {
+    return view('aluno.aluno');
 });
 
 // Rotas para Eixo
