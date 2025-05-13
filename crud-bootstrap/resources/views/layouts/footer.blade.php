@@ -5,7 +5,7 @@
             <p class="text-center">Todos os direitos reservados &copy; {{ date('Y') }}</p>
         </div>
     </footer>
-    <footer class="py-4 bg-light mt-auto">
+    {{-- <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="text-muted">Copyright &copy; SIGAC - Sistema de Gerenciamento de Atividades Complementares 2025</div>
@@ -16,5 +16,5 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </footer> --}}
 </div>
