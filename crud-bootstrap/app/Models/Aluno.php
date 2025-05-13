@@ -27,24 +27,23 @@ class Aluno extends Model
         'turma_id',
         'curso_id',
     ];
-
-    public function __construct(
-        string $nome,
-        string $email,
-        string $cpf,
-        string $senha,
-        int $user_id,
-        int $turma_id,
-        int $curso_id
-    ) {
-        $this->nome = $nome;
-        $this->email = $email;
-        $this->cpf = $cpf;
-        $this->senha = $senha;
-        $this->user_id = $user_id;
-        $this->turma_id = $turma_id;
-        $this->curso_id = $curso_id;
-    }
+//    public function __construct(
+//        string $nome,
+//        string $email,
+//        string $cpf,
+//        string $senha,
+//        int $user_id,
+//        int $turma_id,
+//        int $curso_id
+//    ) {
+//        $this->nome = $nome;
+//        $this->email = $email;
+//        $this->cpf = $cpf;
+//        $this->senha = $senha;
+//        $this->user_id = $user_id;
+//        $this->turma_id = $turma_id;
+//        $this->curso_id = $curso_id;
+//    }
 
     public function comprovantes(): HasMany{
         return $this->hasMany(Comprovante::class);
