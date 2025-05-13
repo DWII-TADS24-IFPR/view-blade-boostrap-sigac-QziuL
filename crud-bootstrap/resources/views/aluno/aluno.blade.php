@@ -18,7 +18,9 @@
         <div class="col-xl">
             <div class="card mb-4">
                 <table class="table table-striped">
-                    <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    <a class="link-underline-opacity-0" href="{{route('aluno.create')}}">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </a>
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
