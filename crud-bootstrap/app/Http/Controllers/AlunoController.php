@@ -54,13 +54,20 @@ class AlunoController extends Controller
 //        );
 
         $aluno = new Aluno();
-        $aluno->nome = $request->get('nome');
-        $aluno->email = $request->get('email');
-        $aluno->cpf = $request->get('cpf');
-        $aluno->senha = $request->get('senha');
-        $aluno->user_id = $request->get('user_id');
-        $aluno->turma_id = $request->get('turma_id');
-        $aluno->curso_id = $request->get('curso_id');
+//        $aluno->email = $request->get('email');
+//        $aluno->cpf = $request->get('cpf');
+//        $aluno->senha = $request->get('senha');
+//        $aluno->user_id = $request->get('user_id');
+//        $aluno->turma_id = $request->get('turma_id');
+//        $aluno->curso_id = $request->get('curso_id');
+
+        $aluno->setNome($request->get('nome'));
+        $aluno->setEmail($request->get('email'));
+        $aluno->setCpf($request->get('cpf'));
+        $aluno->setSenha($request->get('senha'));
+        $aluno->setUserId($request->get('user_id'));
+        $aluno->setTurmaId($request->get('turma_id'));
+        $aluno->setCursoId($request->get('curso_id'));
 
         $this->repository->save($aluno);
         return redirect()->route('aluno.index')->with('success', 'Aluno cadastrado com sucesso!');
