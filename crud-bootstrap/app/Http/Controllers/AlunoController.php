@@ -11,6 +11,7 @@ use Illuminate\View\View;
 class AlunoController extends Controller
 {
     private AlunoRepository $repository;
+
     private array $regrasValidacao = [
         'nome'      => 'required|min:4|max:255',
         'email'     => 'required|email|max:255',
@@ -27,6 +28,11 @@ class AlunoController extends Controller
         'cpf.required' => 'O campo cpf é obrigatório.',
         'senha.required' => 'O campo senha é obrigatório',
     ];
+
+    public function __construct()
+    {
+        $this->repository = new AlunoRepository();
+    }
 
     public function index(): View
     {
