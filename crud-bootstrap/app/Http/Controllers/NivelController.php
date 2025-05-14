@@ -4,80 +4,82 @@ namespace App\Http\Controllers;
 
 use App\Models\Nivel;
 use App\Repositories\NivelRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class NivelController extends Controller
 {
-    protected NivelRepository $repository;
+    private NivelRepository $repository;
+
+    private array $regrasValidacao = [
+        'nome' => 'required|min:3|max:100',
+    ];
+
+    private array $mensagemErro = [
+        'nome.required' => 'O campo nome é obrigatorio.',
+        'nome.min' => 'O campo nome deve ter mais de 3 caracteres.',
+        'nome.max' => 'O campo nome deve ter menos de 100 caracteres.',
+    ];
 
     public function __construct(){
         $this->repository = new NivelRepository();
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(): object
+    public function index(): View
     {
-        return $this->repository->selectAll();
+        $niveis = $this->repository->selectAll();
+        return view('nivel.index', compact('niveis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('nivel.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): string
+    public function store(Request $request): View
     {
-        $obj = new Nivel();
-        $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
-        $this->repository->save($obj);
-        return "<h1>Store - OK!</h1>";
+        $request->validate($this->regrasValidacao, $this->mensagemErro);
+
+        $nivel = new Nivel();
+        $nivel->setNome(mb_strtoupper($request->get('nome'), 'UTF-8'));
+        $this->repository->save($nivel);
+
+        return view('nivel.create')->with('success', 'Nivel cadastrado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(string $id): View | RedirectResponse
     {
-        return $this->repository->findById($id);
+        $nivel = $this->repository->findById($id);
+        return (isset($nivel))
+            ? view('nivel.show', compact('nivel'))
+            : redirect()->back()->with('error', 'Nivel não encontrado.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(string $id): View | RedirectResponse
     {
-        //
+        $nivel = $this->repository->findById($id);
+        return (isset($nivel))
+            ? view('nivel.edit', compact('nivel'))
+            : redirect()->back()->with('error', 'Nivel não encontrado.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id): string
+    public function update(Request $request, string $id): RedirectResponse
     {
-        $obj = $this->repository->findById($id);
-        if(isset($obj)) {
-            $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
-            $this->repository->save($obj);
-            return "<h1>Update - OK!</h1>";
+        $nivel = $this->repository->findById($id);
+
+        if(isset($nivel)) {
+            $nivel->setNome(mb_strtoupper($request->nome, 'UTF-8'));
+            $this->repository->save($nivel);
+            return redirect()->back()->with('success', 'Nivel atualizado com sucesso.');
         }
-        return "<h1>Update - Not found Nivel!</h1>";
+        return redirect()->back()->with('error', 'Nivel não encontrado.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id): string
+    public function destroy(string $id): RedirectResponse
     {
-        if($this->repository->delete($id))
-            return "<h1>Delete - OK!</h1>";
-        return "<h1>Delete - Not found Nivel!</h1>";
+        return ($this->repository->delete($id))
+            ? redirect()->back()->with('success', 'Nivel deletado com sucesso.')
+            : redirect()->back()->with('error', 'Falha ao deletar.');
     }
 }
