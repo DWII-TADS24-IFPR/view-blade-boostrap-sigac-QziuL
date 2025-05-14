@@ -51,15 +51,15 @@ class EixoController extends Controller
         return redirect()->route('eixo.index')->with('success', 'Eixo cadastrado com sucesso!');
     }
 
-    public function show(string $id): View | RedirectResponse
+    public function show(int $id): View | RedirectResponse
     {
         $eixo = $this->repository->findById($id);
         return ($eixo)
-            ? redirect()->view('eixo.show', compact('eixo'))
+            ? view('eixo.show', compact('eixo'))
             : redirect()->route('eixo.index')->with('error', 'Eixo não encontrado.');
     }
 
-    public function edit(string $id): View | RedirectResponse
+    public function edit(int $id): View | RedirectResponse
     {
         $eixo = $this->repository->findById($id);
         return ($eixo)
@@ -67,7 +67,7 @@ class EixoController extends Controller
             : redirect()->route('eixo.index')->with('error', 'Eixo não encontrado.');
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         $eixo = $this->repository->findById($id);
 
@@ -80,7 +80,7 @@ class EixoController extends Controller
         return redirect()->route('eixo.index')->with('error', 'Eixo não encontrado.');
     }
 
-    public function destroy(string $id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         return ($this->repository->delete($id))
             ? redirect()->route('eixo.index')->with('sucess', 'Eixo deletado com sucesso!')
