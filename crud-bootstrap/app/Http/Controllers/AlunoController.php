@@ -50,25 +50,8 @@ class AlunoController extends Controller
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
-//        $aluno = new Aluno(
-//            $request->nome,
-//            $request->email,
-//            $request->cpf,
-//            $request->senha,
-//            $request->user_id,
-//            $request->turma_id,
-//            $request->curso_id
-//        );
-
         $aluno = new Aluno();
-//        $aluno->email = $request->get('email');
-//        $aluno->cpf = $request->get('cpf');
-//        $aluno->senha = $request->get('senha');
-//        $aluno->user_id = $request->get('user_id');
-//        $aluno->turma_id = $request->get('turma_id');
-//        $aluno->curso_id = $request->get('curso_id');
-
-        $aluno->setNome($request->get('nome'));
+        $aluno->setNome(mb_strtoupper($request->get('nome'), 'UTF-8'));
         $aluno->setEmail($request->get('email'));
         $aluno->setCpf($request->get('cpf'));
         $aluno->setSenha($request->get('senha'));
@@ -82,8 +65,7 @@ class AlunoController extends Controller
 
     public function show(string $id): View | RedirectResponse
     {
-        $aluno = $this->repository->findById($id);
-
+        $aluno = $this->find($id);
         return ($aluno)
             ?  view('aluno.show')->with('aluno', $aluno)
             :  redirect()->route('aluno.index')->with('error', 'Aluno inexistente.');
@@ -91,35 +73,29 @@ class AlunoController extends Controller
 
     public function edit(string $id): View | RedirectResponse
     {
-        $aluno = $this->repository->findById($id);
-
+        $aluno = $this->find($id);
         return ($aluno)
             ? view('aluno.edit')->with('aluno', $aluno)
             : redirect()->route('aluno.index')->with('error', 'Aluno inexistente.');
     }
 
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(Request $request, string $id): View
     {
-        $aluno = $this->repository->findById($id);
-
-        if (!$aluno)
-            return redirect()->route('aluno.index')->with('error', 'Aluno inexistente.');
-
         $request->validate($this->regrasValidacao, $this->mensagemErro);
-        $aluno->update($request->all());
 
-        return redirect()->route('aluno.index')->with('success', 'Aluno atualizado com sucesso!');
+        $aluno = $this->find($id);
+        if (isset($aluno)) {
+            $aluno->update($request->all());
+            return view('aluno.show', compact('aluno'))->with('success', 'Aluno atualizado com sucesso!');
+        }
+        return view('aluno.edit')->with('error', 'Aluno inexistente.');
     }
 
     public function destroy(string $id): RedirectResponse
     {
-        $aluno = $this->repository->findById($id);
-
-        if (!$aluno)
-            return redirect()->route('aluno.index')->with('error', 'Aluno inexistente.');
-
-        $aluno->softDelete();
-        return redirect()->route('aluno.index')->with('success', 'Aluno removido com sucesso!');
+        return ($this->find($id)->softDeletes())
+            ? redirect()->route('aluno.index')->with('success', 'Aluno removido com sucesso!')
+            : redirect()->route('aluno.index')->with('error', 'Falha ao deletar.');
     }
 
     private function find(int $id): object | null
