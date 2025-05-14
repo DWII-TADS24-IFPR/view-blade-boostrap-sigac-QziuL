@@ -121,4 +121,9 @@ class AlunoController extends Controller
         $aluno->softDelete();
         return redirect()->route('aluno.index')->with('success', 'Aluno removido com sucesso!');
     }
+
+    private function find(int $id): object | null
+    {
+        return $this->repository->findById($id);
+    }
 }
