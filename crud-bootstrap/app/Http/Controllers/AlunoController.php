@@ -36,8 +36,9 @@ class AlunoController extends Controller
 
     public function index(): View
     {
+        // Se não tiver dados registrados, exibir na View dados nulos
         $alunos = $this->repository->selectAll();
-        return view('aluno.aluno')->with('alunos', $alunos);
+        return view('aluno.aluno', compact('alunos'));
     }
 
     public function create(): View
