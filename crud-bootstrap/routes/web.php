@@ -17,7 +17,7 @@ Route::post('/aluno/create', [AlunoController::class, 'store'])->name('aluno.sto
 Route::prefix('/eixo')->group(function(){
     Route::get('/', function () {
         //
-    });
+    })->name('eixo.index');
 
     Route::post('/', function (Request $request) {
         //
