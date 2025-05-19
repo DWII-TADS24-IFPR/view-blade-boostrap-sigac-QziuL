@@ -21,9 +21,26 @@
                         <label class="form-label" for="cpf">CPF:</label>
                         <input class="form-control" type="text" name="cpf" required>
                     </div>
+                    <select class="form-select mb-1" aria-label="Selecione um curso">
+                        <option value="0">Selecione um curso...</option>
+                        @foreach($cursos as $curso)
+                            <option value="{{$curso->id}}">{{ $curso->nome }}</option>
+                        @endforeach
+                    </select>
+                    <select class="form-select mb-1" aria-label="Selecione uma turma">
+                        <option value="0">Selecione uma turma...</option>
+                        @foreach($turmas as $turma)
+                            <option value="{{$turma->id}}">{{ $turma->ano }}</option>
+                        @endforeach
+                    </select>
                     <button class="btn btn-primary" type="submit">Criar</button>
                 </form>
-                <a href="{{route('aluno.index')}}"><button class="btn btn-danger mt-2">Cancelar</button></a>
+
+                <button class="btn btn-danger mt-2">
+                    <a class="text-decoration-none text-white" href="{{route('aluno.index')}}">
+                        Cancelar
+                    </a>
+                </button>
             </div>
         </div>
     </div>
