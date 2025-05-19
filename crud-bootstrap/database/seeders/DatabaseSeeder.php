@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EixoSeeder::class);
         $this->call(NivelSeeder::class);
         $this->call(CursoSeeder::class);
+        $this->call(TurmaSeeder::class);
 
         // User::factory(10)->create();
 
