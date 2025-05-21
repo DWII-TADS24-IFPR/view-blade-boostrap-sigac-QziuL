@@ -17,10 +17,8 @@ return new class extends Migration
             $table->string('atividade');
             $table->unsignedBigInteger('categoria_id');
             $table->unsignedBigInteger('aluno_id');
-            $table->unsignedBigInteger('user_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->foreign('aluno_id')->references('id')->on('alunos');
-            $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('comentario');
             $table->float('horas_out');
             $table->unsignedBigInteger('categoria_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->softDeletes();
             $table->timestamps();
         });

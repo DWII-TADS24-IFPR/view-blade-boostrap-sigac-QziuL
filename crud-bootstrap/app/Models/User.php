@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable;
 
     protected $table = 'users';
 
@@ -50,23 +50,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function alunos(): HasMany{
-        return $this->hasMany(Aluno::class);
-    }
-
-    public function comprovantes(): HasMany{
-        return $this->hasMany(Comprovante::class);
-    }
-
-    public function documentos(): HasMany{
-        return $this->hasMany(Documento::class);
-    }
-
-    public function role(): BelongsTo{
-        return $this->belongsTo(Role::class);
-    }
-
-    public function curso(): BelongsTo{
-        return $this->belongsTo(Curso::class);
-    }
+//    public function alunos(): HasMany{
+//        return $this->hasMany(Aluno::class);
+//    }
+//
+//    public function comprovantes(): HasMany{
+//        return $this->hasMany(Comprovante::class);
+//    }
+//
+//    public function documentos(): HasMany{
+//        return $this->hasMany(Documento::class);
+//    }
+//
+//    public function role(): BelongsTo{
+//        return $this->belongsTo(Role::class);
+//    }
+//
+//    public function curso(): BelongsTo{
+//        return $this->belongsTo(Curso::class);
+//    }
 }
