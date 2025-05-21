@@ -17,16 +17,14 @@ class AlunoController extends Controller
     private AlunoRepository $repository;
     private CursoRepository $cursoRepository;
     private TurmaRepository $turmaRepository;
-    private UserController $userController;
 
     private array $regrasValidacao = [
         'nome'      => 'required|min:4|max:255',
         'email'     => 'required|email|max:255',
         'cpf'       => 'required|min:11|max:11',
         'senha'     => 'required|min:6|max:100',
-        'user_id'   => 'required',
-        'turma_id'  => 'required',
-        'curso_id'  => 'required',
+        'turma'     => 'required',
+        'curso'     => 'required',
     ];
 
     private array $mensagemErro = [
@@ -61,20 +59,16 @@ class AlunoController extends Controller
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
-        $this->userController->store($request);
-        $user = $this->userController->findByEmail($request->get('email'));
-
         $aluno = new Aluno();
         $aluno->setNome(mb_strtoupper($request->get('nome'), 'UTF-8'));
         $aluno->setEmail($request->get('email'));
         $aluno->setCpf($request->get('cpf'));
         $aluno->setSenha(bcrypt($request->get('senha')));
-        $aluno->setUserId($user->id);
-        $aluno->setTurmaId($request->get('turma_id'));
-        $aluno->setCursoId($request->get('curso_id'));
+        $aluno->setTurmaId(intval($request->get('turma')));
+        $aluno->setCursoId(intval($request->get('curso')));
         $this->repository->save($aluno);
 
-        return view('aluno.index')->with('success', 'Aluno cadastrado com sucesso!');
+        return view('layouts.app')->with('success', 'Aluno cadastrado com sucesso!');
     }
 
     public function show(string $id): View
