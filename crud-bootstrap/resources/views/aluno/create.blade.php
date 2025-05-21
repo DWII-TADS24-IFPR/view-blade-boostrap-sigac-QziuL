@@ -2,7 +2,24 @@
 
 @section('title', 'Criar aluno')
 
+{{--@if($success)--}}
+{{--    <div class="alert alert-success">--}}
+{{--        <p>{{ $success }}</p>--}}
+{{--    </div>--}}
+{{--@endif--}}
+
+
 @section('content')
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="container-fluid px-4 mt-4 ">
         <div class="card">
             <div class="card-body">
@@ -21,26 +38,31 @@
                         <label class="form-label" for="cpf">CPF:</label>
                         <input class="form-control" type="text" name="cpf" required>
                     </div>
-                    <select class="form-select mb-1" aria-label="Selecione um curso">
-                        <option value="0">Selecione um curso...</option>
-                        @foreach($cursos as $curso)
-                            <option value="{{$curso->id}}">{{ $curso->nome }}</option>
-                        @endforeach
-                    </select>
-                    <select class="form-select mb-1" aria-label="Selecione uma turma">
-                        <option value="0">Selecione uma turma...</option>
-                        @foreach($turmas as $turma)
-                            <option value="{{$turma->id}}">{{ $turma->ano }}</option>
-                        @endforeach
-                    </select>
+                    <div class="mb-3">
+                        <label class="form-label" for="senha">Senha:</label>
+                        <input class="form-control" type="password" name="senha" required>
+                    </div>
+                   <div class="mb-3">
+                       <label class="form-label" for="curso">Selecione um curso...</label>
+                       <select class="form-select mb-1" name="curso" required>
+                           @foreach($cursos as $curso)
+                               <option value="{{$curso->id}}">{{ $curso->nome }}</option>
+                           @endforeach
+                       </select>
+                   </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="turma">Selecione uma turma...</label>
+                        <select class="form-select mb-1" name="turma" required>
+                            @foreach($turmas as $turma)
+                                <option value="{{$turma->id}}">{{ $turma->ano }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button class="btn btn-primary" type="submit">Criar</button>
-                </form>
-
-                <button class="btn btn-danger mt-2">
-                    <a class="text-decoration-none text-white" href="{{route('aluno.index')}}">
+                    <a class="btn btn-danger mt-2 text-decoration-none text-white" href="{{route('aluno.index')}}">
                         Cancelar
                     </a>
-                </button>
+                </form>
             </div>
         </div>
     </div>
