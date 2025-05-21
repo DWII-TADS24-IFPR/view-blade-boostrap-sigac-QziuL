@@ -14,7 +14,6 @@ class Aluno extends Model
     private     string $email;
     private     string $cpf;
     private     string $senha;
-    private     int $user_id;
     private     int $turma_id;
     private     int $curso_id;
 
@@ -25,28 +24,9 @@ class Aluno extends Model
         'email',
         'cpf',
         'senha',
-        'user_id',
         'turma_id',
         'curso_id',
     ];
-//    public function __construct(
-//        string $nome,
-//        string $email,
-//        string $cpf,
-//        string $senha,
-//        int $user_id,
-//        int $turma_id,
-//        int $curso_id
-//    ) {
-//        $this->nome = $nome;
-//        $this->email = $email;
-//        $this->cpf = $cpf;
-//        $this->senha = $senha;
-//        $this->user_id = $user_id;
-//        $this->turma_id = $turma_id;
-//        $this->curso_id = $curso_id;
-//    }
-
 
     public function comprovantes(): HasMany{
         return $this->hasMany(Comprovante::class);
@@ -69,9 +49,9 @@ class Aluno extends Model
         return $this->nome;
     }
 
-    public function setNome(string $nome): void
+    public function setNome($value): void
     {
-        $this->nome = $nome;
+        $this->attributes['nome'] = $value;
     }
 
     public function getEmail(): string
@@ -79,9 +59,9 @@ class Aluno extends Model
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail($value): void
     {
-        $this->email = $email;
+        $this->attributes['email'] = $value;
     }
 
     public function getCpf(): string
@@ -89,9 +69,9 @@ class Aluno extends Model
         return $this->cpf;
     }
 
-    public function setCpf(string $cpf): void
+    public function setCpf($value): void
     {
-        $this->cpf = $cpf;
+        $this->attributes['cpf'] = $value;
     }
 
     public function getSenha(): string
@@ -99,19 +79,9 @@ class Aluno extends Model
         return $this->senha;
     }
 
-    public function setSenha(string $senha): void
+    public function setSenha($value): void
     {
-        $this->senha = $senha;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): void
-    {
-        $this->user_id = $user_id;
+        $this->attributes['senha'] = $value;
     }
 
     public function getTurmaId(): int
@@ -119,9 +89,9 @@ class Aluno extends Model
         return $this->turma_id;
     }
 
-    public function setTurmaId(int $turma_id): void
+    public function setTurmaId($value): void
     {
-        $this->turma_id = $turma_id;
+        $this->attributes['turma_id'] = $value;
     }
 
     public function getCursoId(): int
@@ -129,8 +99,8 @@ class Aluno extends Model
         return $this->curso_id;
     }
 
-    public function setCursoId(int $curso_id): void
+    public function setCursoId($value): void
     {
-        $this->curso_id = $curso_id;
+        $this->attributes['curso_id'] = $value;
     }
 }
