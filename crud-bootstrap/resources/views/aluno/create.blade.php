@@ -2,13 +2,6 @@
 
 @section('title', 'Criar aluno')
 
-{{--@if($success)--}}
-{{--    <div class="alert alert-success">--}}
-{{--        <p>{{ $success }}</p>--}}
-{{--    </div>--}}
-{{--@endif--}}
-
-
 @section('content')
     @if($errors->any())
         <div class="alert alert-danger">

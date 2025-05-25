@@ -17,12 +17,11 @@ class AlunoController extends Controller
     private AlunoRepository $repository;
     private CursoRepository $cursoRepository;
     private TurmaRepository $turmaRepository;
-
     private array $regrasValidacao = [
         'nome'      => 'required|min:4|max:255',
         'email'     => 'required|email|max:255',
         'cpf'       => 'required|min:11|max:11',
-        'senha'     => 'required|min:6|max:100',
+        'senha'     => 'min:6|max:100',
         'turma'     => 'required',
         'curso'     => 'required',
     ];
@@ -45,7 +44,7 @@ class AlunoController extends Controller
     {
         // Se não tiver dados registrados, exibir na View dados nulos
         $alunos = $this->repository->selectAll();
-        return view('aluno.index', compact('alunos'));
+        return view('aluno.index')->with('alunos', $alunos);
     }
 
     public function create(): View
@@ -55,7 +54,7 @@ class AlunoController extends Controller
         return view('aluno.create', compact('cursos', 'turmas'));
     }
 
-    public function store(Request $request): View
+    public function store(Request $request): View | RedirectResponse
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
@@ -68,7 +67,7 @@ class AlunoController extends Controller
         $aluno->setCursoId(intval($request->get('curso')));
         $this->repository->save($aluno);
 
-        return view('layouts.app')->with('success', 'Aluno cadastrado com sucesso!');
+        return redirect()->route('aluno.index')->with(['success' => 'Aluno cadastrado com sucesso!']);
     }
 
     public function show(string $id): View
@@ -79,34 +78,43 @@ class AlunoController extends Controller
             :  view('aluno.index')->with('error', 'Aluno inexistente.');
     }
 
-    public function edit(string $id): View
+    public function edit(int $id): View
     {
         $aluno = $this->find($id);
+        $cursos = $this->cursoRepository->selectAll();
+        $turmas = $this->turmaRepository->selectAll();
         return ($aluno)
-            ? view('aluno.edit')->with('aluno', $aluno)
+            ? view('aluno.edit', compact('aluno', 'cursos', 'turmas'))
             : view('aluno.index')->with('error', 'Aluno inexistente.');
     }
 
-    public function update(Request $request, string $id): View
+    public function update(Request $request, string $id): View | RedirectResponse
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
         $aluno = $this->find($id);
         if (isset($aluno)) {
-            $aluno->update($request->all());
-            return view('aluno.show', compact('aluno'))->with('success', 'Aluno atualizado com sucesso!');
+            $aluno->setNome(mb_strtoupper($request->get('nome'), 'UTF-8'));
+            $aluno->setEmail($request->get('email'));
+            $aluno->setCpf($request->get('cpf'));
+            $aluno->setCursoId(intval($request->get('curso')));
+            $aluno->setTurmaId(intval($request->get('turma')));
+            $aluno->update();
+//            $aluno->update($request->all());
+            return redirect()->route('aluno.index')->with('success', 'Aluno atualizado com sucesso!');
         }
-        return view('aluno.edit')->with('error', 'Aluno inexistente.');
+        return view('aluno.index')->with('error', 'Aluno inexistente.');
     }
 
-    public function destroy(string $id): View
+    public function destroy(int $id): View | RedirectResponse
     {
-        return ($this->find($id)->softDeletes())
-            ? view('aluno.index')->with('success', 'Aluno removido com sucesso!')
-            : view('aluno.index')->with('error', 'Falha ao deletar.');
+        // REDIRECT FOR VIEW METHOD WITHOUT PARAMETER
+        return ($this->find($id)->delete())
+            ? redirect()->route('aluno.index')->with(['success' => 'Aluno removido com sucesso!'])
+            : redirect()->route('aluno.index')->with(['error' => 'Aluno inexistente.']);
     }
 
-    private function find(int $id): object | null
+    private function find(int $id)
     {
         return $this->repository->findById($id);
     }
