@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Curso extends Model
 {
+    use SoftDeletes;
     private string $nome;
     private string $sigla;
     private string $total_horas;
@@ -24,54 +26,29 @@ class Curso extends Model
         'eixo_id'
     ];
 
-    public function getNome(): string
+    public function setNome($value): void
     {
-        return $this->nome;
+        $this->attributes['nome'] = $value;
     }
 
-    public function setNome(string $nome): void
+    public function setSigla($value): void
     {
-        $this->nome = $nome;
+        $this->attributes['sigla'] = $value;
     }
 
-    public function getSigla(): string
+    public function setTotalHoras($value): void
     {
-        return $this->sigla;
+        $this->attributes['total_horas'] = $value;
     }
 
-    public function setSigla(string $sigla): void
+    public function setNivelId($value): void
     {
-        $this->sigla = $sigla;
+        $this->attributes['nivel_id'] = $value;
     }
 
-    public function getTotalHoras(): string
+    public function setEixoId($value): void
     {
-        return $this->total_horas;
-    }
-
-    public function setTotalHoras(string $total_horas): void
-    {
-        $this->total_horas = $total_horas;
-    }
-
-    public function getNivelId(): int
-    {
-        return $this->nivel_id;
-    }
-
-    public function setNivelId(int $nivel_id): void
-    {
-        $this->nivel_id = $nivel_id;
-    }
-
-    public function getEixoId(): int
-    {
-        return $this->eixo_id;
-    }
-
-    public function setEixoId(int $eixo_id): void
-    {
-        $this->eixo_id = $eixo_id;
+        $this->attributes['eixo_id'] = $value;
     }
 
     public function turmas(): HasMany{
@@ -84,10 +61,6 @@ class Curso extends Model
 
     public function categorias(): HasMany{
         return $this->HasMany(Categoria::class);
-    }
-
-    public function users(): HasMany{
-        return $this->HasMany(User::class);
     }
 
     public function nivel(): BelongsTo{

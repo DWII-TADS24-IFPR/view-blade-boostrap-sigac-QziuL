@@ -4,23 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Nivel extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'niveis';
-
     protected $fillable = ['nome'];
-
     private string $nome;
 
-    public function getNome(): string
+    public function setNome($value): void
     {
-        return $this->nome;
-    }
-
-    public function setNome(string $nome): void
-    {
-        $this->nome = $nome;
+        $this->attributes['nome'] = $value;
     }
 
     public function cursos(): HasMany{

@@ -6,12 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     protected $table = 'users';
@@ -50,23 +50,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function alunos(): HasMany{
-        return $this->hasMany(Aluno::class);
-    }
-
-    public function comprovantes(): HasMany{
-        return $this->hasMany(Comprovante::class);
-    }
-
-    public function documentos(): HasMany{
-        return $this->hasMany(Documento::class);
-    }
-
-    public function role(): BelongsTo{
-        return $this->belongsTo(Role::class);
-    }
-
-    public function curso(): BelongsTo{
-        return $this->belongsTo(Curso::class);
-    }
+//    public function alunos(): HasMany{
+//        return $this->hasMany(Aluno::class);
+//    }
+//
+//    public function comprovantes(): HasMany{
+//        return $this->hasMany(Comprovante::class);
+//    }
+//
+//    public function documentos(): HasMany{
+//        return $this->hasMany(Documento::class);
+//    }
+//
+//    public function role(): BelongsTo{
+//        return $this->belongsTo(Role::class);
+//    }
+//
+//    public function curso(): BelongsTo{
+//        return $this->belongsTo(Curso::class);
+//    }
 }

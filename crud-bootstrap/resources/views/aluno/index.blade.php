@@ -2,69 +2,79 @@
 
 @section('title', 'Alunos')
 
+
 @section('content')
-<div class="container-fluid px-4 mt-4">
-    <div class="row">
-        <div class="col-xl-2">
-            <div class="card mb-4">
-                Cadastrar Aluno
-            </div>
-            <div class="card mb-4">
-                Visualizar Alunos
-            </div>
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xl">
-            <div class="card mb-4">
-                <table class="table table-striped">
-                    <a class="link-underline-opacity-0" href="{{route('aluno.create')}}">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    </a>
-                    <thead>
+    @endif
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <div class="container-fluid px-4 row">
+        <div class="col-xl vh-100">
+            <div class="card p-4 border-light mb-3">
+                <h4 class="text-center bg-black text-white rounded-top-5 p-2">Alunos Cadastrados</h4>
+                <a class="text-center fs-5 link-underline-info" href="{{ route('aluno.create' )}}">
+                    Cadastrar aluno
+                </a>
+                @if($alunos->isEmpty())
+                    <p class="text-center fs-5 mt-3">Não há alunos cadastrados...</p>
+                @else
+                    <table class="table table-striped">
+
+                        <thead>
                         <tr>
                             <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Curso</th>
                             <th scope="col">Turma</th>
-                            <th scope="col">Ação</th>
+                            <th scope="col" class="text-center">Ação</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            {{-- <th scope="row">Luiz Fernando Quinholi Mendes</th> --}}
-                            <td>Luiz Fernando Quinholi Mendes</td>
-                            <td>Análise e Desenvolvimento de Sistemas</td>
-                            <td>TADS24</td>
-                            <td>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                |
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Luiz Fernando Quinholi Mendes</td>
-                            <td>Análise e Desenvolvimento de Sistemas</td>
-                            <td>TADS24</td>
-                            <td>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                |
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Luiz Fernando Quinholi Mendes</td>
-                            <td>Análise e Desenvolvimento de Sistemas</td>
-                            <td>TADS24</td>
-                            <td>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                                |
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+
+                            @foreach($alunos as $aluno)
+                            <tr>
+                                <td>{{$aluno->nome}}</td>
+                                <td>{{$aluno->email}}</td>
+                                <td>{{$aluno->curso->sigla}}</td>
+                                <td>{{$aluno->turma->ano}}</td>
+                                <td class="d-flex justify-content-around">
+                                    <form method="get"
+                                          class="d-inline m-0 p-0"
+                                          action="{{ route('aluno.edit', $aluno->id) }}" >
+                                        @csrf
+                                        <button class="btn m-0 p-0" type="submit">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+
+                                    <form method="post" class="d-inline m-0 p-0"
+                                          action="{{ route('aluno.destroy', $aluno->id) }}"
+                                          onsubmit="return confirm('Tem certeza que deseja excluir?');" >
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn m-0 p-0" type="submit">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+
             </div>
         </div>
     </div>
-</div>
 @endsection

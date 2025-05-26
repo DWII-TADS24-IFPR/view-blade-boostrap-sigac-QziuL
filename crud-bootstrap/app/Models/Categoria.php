@@ -5,12 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Categoria extends Model
 {
+    use SoftDeletes;
+    private string $nome;
+    private int $curso_id;
+    private int $maximo_horas;
+
     protected $table = 'categorias';
 
     protected $fillable = ['nome', 'curso_id', 'maximo_horas'];
+
+    public function setNome($value): void
+    {
+        $this->attributes['nome'] = $value;
+    }
+
+    public function setCursoId($value): void
+    {
+        $this->attributes['curso_id'] = $value;
+    }
+
+    public function setMaximoHoras($value): void
+    {
+        $this->attributes['maximo_horas'] = $value;
+    }
 
     public function comprovantes(): HasMany{
         return $this->hasMany(Comprovante::class);
