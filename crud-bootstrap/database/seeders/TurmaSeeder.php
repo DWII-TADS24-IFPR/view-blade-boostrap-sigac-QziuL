@@ -11,12 +11,22 @@ class TurmaSeeder extends Seeder
     public function run(): void
     {
         $data = [
+            // TÉCNICO EM INFORMÁTICA
             [
-                "ano" => "2024",
+                "ano" => 2024,
                 "curso_id" => 1,
             ],
             [
-                "ano" => "2025",
+                "ano" => 2025,
+                "curso_id" => 1,
+            ],
+            // TECNÓLOGO EM ANÁLISE E DESENVOLVIMENTO DE SISTEMAS
+            [
+                "ano" => 2024,
+                "curso_id" => 2,
+            ],
+            [
+                "ano" => 2025,
                 "curso_id" => 2,
             ],
         ];
