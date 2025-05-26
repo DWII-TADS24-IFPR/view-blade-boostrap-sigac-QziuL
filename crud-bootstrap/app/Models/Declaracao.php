@@ -20,47 +20,25 @@ class Declaracao extends Model
     private int $aluno_id;
     private int $comprovante_id;
 
-    public function getHash(): string
+    public function setHash($value): void
     {
-        return $this->hash;
+        $this->attributes['hash'] = $value;
     }
 
-    public function setHash(string $hash): void
+    public function setData($value): void
     {
-        $this->hash = $hash;
+        $this->attributes['data'] = $value;
     }
 
-    public function getData(): DateTime
+    public function setAlunoId($value): void
     {
-        return $this->data;
+        $this->attributes['aluno_id'] = $value;
     }
 
-    public function setData(DateTime $data): void
+    public function setComprovanteId($value): void
     {
-        $this->data = $data;
+        $this->attributes['comprovante_id'] = $value;
     }
-
-    public function getAlunoId(): int
-    {
-        return $this->aluno_id;
-    }
-
-    public function setAlunoId(int $aluno_id): void
-    {
-        $this->aluno_id = $aluno_id;
-    }
-
-    public function getComprovanteId(): int
-    {
-        return $this->comprovante_id;
-    }
-
-    public function setComprovanteId(int $comprovante_id): void
-    {
-        $this->comprovante_id = $comprovante_id;
-    }
-
-
 
     public function aluno(): BelongsTo{
         return $this->belongsTo(Aluno::class);

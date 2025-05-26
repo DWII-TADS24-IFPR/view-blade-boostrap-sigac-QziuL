@@ -18,37 +18,20 @@ class Categoria extends Model
 
     protected $fillable = ['nome', 'curso_id', 'maximo_horas'];
 
-    public function getNome(): string
+    public function setNome($value): void
     {
-        return $this->nome;
+        $this->attributes['nome'] = $value;
     }
 
-    public function setNome(string $nome): void
+    public function setCursoId($value): void
     {
-        $this->nome = $nome;
+        $this->attributes['curso_id'] = $value;
     }
 
-    public function getCursoId(): int
+    public function setMaximoHoras($value): void
     {
-        return $this->curso_id;
+        $this->attributes['maximo_horas'] = $value;
     }
-
-    public function setCursoId(int $curso_id): void
-    {
-        $this->curso_id = $curso_id;
-    }
-
-    public function getMaximoHoras(): int
-    {
-        return $this->maximo_horas;
-    }
-
-    public function setMaximoHoras(int $maximo_horas): void
-    {
-        $this->maximo_horas = $maximo_horas;
-    }
-
-
 
     public function comprovantes(): HasMany{
         return $this->hasMany(Comprovante::class);

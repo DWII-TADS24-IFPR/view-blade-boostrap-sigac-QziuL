@@ -12,30 +12,19 @@ class Turma extends Model
     use SoftDeletes;
 
     protected $table = 'turmas';
-
     protected $fillable = ['curso_id', 'ano'];
 
     private int $ano;
     private int $curso_id;
 
-    public function getAno(): int
+    public function setAno($value): void
     {
-        return $this->ano;
+        $this->attributes['ano'] = $value;
     }
 
-    public function setAno(int $ano): void
+    public function setCursoId($value): void
     {
-        $this->ano = $ano;
-    }
-
-    public function getCursoId(): int
-    {
-        return $this->curso_id;
-    }
-
-    public function setCursoId(int $curso_id): void
-    {
-        $this->curso_id = $curso_id;
+        $this->attributes['curso_id'] = $value;
     }
 
     public function curso(): BelongsTo{

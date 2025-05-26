@@ -19,8 +19,7 @@ class Documento extends Model
         'horas_out',
         'status',
         'comentario',
-        'categoria_id',
-        'user_id',
+        'categoria_id'
     ];
 
     private string $url;
@@ -30,86 +29,40 @@ class Documento extends Model
     private string $status;
     private string $comentario;
     private int $categoria_id;
-    private int $user_id;
 
-    public function getUrl(): string
+    public function setUrl($value): void
     {
-        return $this->url;
+        $this->attributes['url'] = $value;
     }
 
-    public function setUrl(string $url): void
+    public function setDescricao($value): void
     {
-        $this->url = $url;
+        $this->attributes['descricao'] = $value;
     }
 
-    public function getDescricao(): string
+    public function setHorasIn($value): void
     {
-        return $this->descricao;
+        $this->attributes['horas_in'] = $value;
     }
 
-    public function setDescricao(string $descricao): void
+    public function setHorasOut($value): void
     {
-        $this->descricao = $descricao;
+        $this->attributes['horas_out'] = $value;
     }
 
-    public function getHorasIn(): float
+    public function setStatus($value): void
     {
-        return $this->horas_in;
+        $this->attributes['status'] = $value;
     }
 
-    public function setHorasIn(float $horas_in): void
+    public function setComentario($value): void
     {
-        $this->horas_in = $horas_in;
+        $this->attributes['comentario'] = $value;
     }
 
-    public function getHorasOut(): float
+    public function setCategoriaId($value): void
     {
-        return $this->horas_out;
-    }
-
-    public function setHorasOut(float $horas_out): void
-    {
-        $this->horas_out = $horas_out;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): void
-    {
-        $this->status = $status;
-    }
-
-    public function getComentario(): string
-    {
-        return $this->comentario;
-    }
-
-    public function setComentario(string $comentario): void
-    {
-        $this->comentario = $comentario;
-    }
-
-    public function getCategoriaId(): int
-    {
-        return $this->categoria_id;
-    }
-
-    public function setCategoriaId(int $categoria_id): void
-    {
-        $this->categoria_id = $categoria_id;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): void
-    {
-        $this->user_id = $user_id;
+        $this->attributes['categoria_id'] = $value;
     }
 
     public function user(): BelongsTo{

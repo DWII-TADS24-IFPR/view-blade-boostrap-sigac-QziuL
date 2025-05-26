@@ -15,7 +15,6 @@ class Comprovante extends Model
     private string $atividade;
     private int $categoria_id;
     private int $aluno_id;
-    private int $user_id;
 
     protected $table = 'comprovantes';
 
@@ -23,58 +22,27 @@ class Comprovante extends Model
         'horas',
         'atividade',
         'categoria_id',
-        'aluno_id',
-        'user_id'
+        'aluno_id'
     ];
 
-    public function getHoras(): int
+    public function setHoras($value): void
     {
-        return $this->horas;
+        $this->attributes['horas'] = $value;
     }
 
-    public function setHoras(int $horas): void
+    public function setAtividade($value): void
     {
-        $this->horas = $horas;
+        $this->attributes['atividade'] = $value;
     }
 
-    public function getAtividade(): string
+    public function setCategoriaId($value): void
     {
-        return $this->atividade;
+        $this->attributes['categoria_id'] = $value;
     }
 
-    public function setAtividade(string $atividade): void
+    public function setAlunoId($value): void
     {
-        $this->atividade = $atividade;
-    }
-
-    public function getCategoriaId(): int
-    {
-        return $this->categoria_id;
-    }
-
-    public function setCategoriaId(int $categoria_id): void
-    {
-        $this->categoria_id = $categoria_id;
-    }
-
-    public function getAlunoId(): int
-    {
-        return $this->aluno_id;
-    }
-
-    public function setAlunoId(int $aluno_id): void
-    {
-        $this->aluno_id = $aluno_id;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): void
-    {
-        $this->user_id = $user_id;
+        $this->attributes['aluno_id'] = $value;
     }
 
     public function declaracoes(): HasMany{

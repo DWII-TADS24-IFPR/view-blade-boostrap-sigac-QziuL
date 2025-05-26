@@ -14,14 +14,9 @@ class Eixo extends Model
     protected $table = 'eixos';
     protected $fillable = ['nome'];
 
-    public function getNome(): string
+    public function setNome($value): void
     {
-        return $this->nome;
-    }
-
-    public function setNome(string $nome): void
-    {
-        $this->nome = $nome;
+        $this->attributes['nome'] = $value;
     }
 
     public function cursos(): HasMany{
