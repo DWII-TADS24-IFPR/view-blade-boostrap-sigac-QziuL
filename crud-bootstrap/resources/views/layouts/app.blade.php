@@ -45,7 +45,7 @@
         <div class="sidebar">
             <h4><a href="{{ route('home') }}">SIGAC</a></h4>
             <a href="{{route('aluno.index')}}">Aluno</a>
-            <a href="#">Categorias</a>
+            <a href="{{ route('categoria.index') }}">Categorias</a>
             <a href="#">Comprovantes</a>
             <a href="#">Cursos</a>
             <a href="#">Declarações</a>
