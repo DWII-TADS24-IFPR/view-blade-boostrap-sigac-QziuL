@@ -46,7 +46,7 @@ class CategoriaController extends Controller
         return view('categoria.create', compact('cursos'));
     }
 
-    public function store(Request $request): View
+    public function store(Request $request): RedirectResponse
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
@@ -56,7 +56,7 @@ class CategoriaController extends Controller
         $categoria->setCursoId($request->get('curso_id'));
         $categoria->save();
 
-        return $this->create()->with('sucess', 'Categoria cadastrada com sucesso!');
+        return redirect()->route('categoria.index')->with('sucess', 'Categoria cadastrada com sucesso!');
 
     }
 
@@ -69,38 +69,35 @@ class CategoriaController extends Controller
             : redirect()->back()->with('error', 'Categoria não encontrada.');
     }
 
-    public function edit(int $id): View | RedirectResponse
+    public function edit(int $id): View
     {
         $categoria = $this->find($id);
-
-        return (isset($categoria))
-            ? view('categoria.edit', compact('categoria'))
-            : redirect()->back()->with('error', 'Categoria não encontrada.');
+        $cursos = $this->cursoRepository->selectAll();
+        return view('categoria.edit', compact('categoria', 'cursos'));
     }
 
-    public function update(Request $request, int $id): View
+    public function update(Request $request, int $id): RedirectResponse
     {
         $request->validate($this->regrasValidacao, $this->mensagemErro);
 
         $categoria = $this->find($id);
-
         if(isset($categoria)) {
             $categoria->setNome(mb_strtoupper($request->get('nome'), 'UTF-8'));
             $categoria->setMaximoHoras($request->get('maximo_horas'));
-            $categoria->setCursoId($request->get('curso_id'));
+            $categoria->setCursoId(intval($request->get('curso_id')));
             $categoria->save();
 
-            return view('categoria.index')->with('sucess', 'Categoria atualizada com sucesso!');
+            return redirect()->route('categoria.index')->with('sucess', 'Categoria atualizada com sucesso!');
         }
 
-        return view('categoria.index')->with('error', 'Falha ao atualizar categoria.');
+        return redirect()->route('categoria.index')->with('error', 'Erro ao atualizar categoria.');
     }
 
-    public function destroy(int $id): View
+    public function destroy(int $id): RedirectResponse
     {
         return ($this->repository->delete($id))
-            ? view('categoria.index')->with('sucess', 'Categoria deletada com sucesso!')
-            : view('categoria.index')->with('error', 'Falha ao deletar categoria.');
+            ? redirect()->route('categoria.index')->with('sucess', 'Categoria deletada com sucesso!')
+            : redirect()->route('categoria.index')->with('error', 'Falha ao deletar categoria.');
     }
 
     private function find(int $id) {
